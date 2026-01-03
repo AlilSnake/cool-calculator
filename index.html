@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <button id="menu-toggle" class="menu-btn" aria-label="Open Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <div class="main-wrapper">
+        <!-- Scientific Panel (Left Side, Toggleable) -->
+        <div class="scientific-panel hidden" id="scientific-panel">
+            <div class="scientific-grid">
+                <button data-science="sin">sin</button>
+                <button data-science="cos">cos</button>
+                <button data-science="tan">tan</button>
+                <button data-science="log">log</button>
+                <button data-science="ln">ln</button>
+                <button data-science="sqrt">√</button>
+                <button data-science="cbrt">³√</button>
+                <button data-science="^">x^y</button>
+                <button data-science="exp">e^x</button>
+                <button data-science="abs">|x|</button>
+                <button data-science="inv">1/x</button>
+                <button data-science="!">x!</button>
+                <button data-science="pi">π</button>
+                <button data-science="e">e</button>
+                <button data-number>(</button>
+                <button data-number>)</button>
+            </div>
+        </div>
+
+        <div class="calculator-card">
+            <div class="toggle-container">
+                <button id="scientific-toggle" title="Toggle Scientific Mode">ƒ(x)</button>
+            </div>
+            <div class="display">
+                <div data-previous-operand class="previous-operand"></div>
+                <div data-current-operand class="current-operand"></div>
+            </div>
+            <div class="buttons-grid">
+                <button data-all-clear class="span-two function-btn">AC</button>
+                <button data-delete class="function-btn">DEL</button>
+                <button data-operation class="operation-btn">÷</button>
+
+                <button data-number>7</button>
+                <button data-number>8</button>
+                <button data-number>9</button>
+                <button data-operation class="operation-btn">*</button>
+
+                <button data-number>4</button>
+                <button data-number>5</button>
+                <button data-number>6</button>
+                <button data-operation class="operation-btn">+</button>
+
+                <button data-number>1</button>
+                <button data-number>2</button>
+                <button data-number>3</button>
+                <button data-operation class="operation-btn">-</button>
+
+                <button data-number>.</button>
+                <button data-number>0</button>
+                <button data-equals class="span-two equals-btn">=</button>
+            </div>
+        </div>
+
+        <div class="sidebar-column" id="sidebar">
+            <button id="menu-close" class="close-btn" aria-label="Close Menu">&times;</button>
+            <div class="simplifier-card">
+                <h2>Root Simplifier</h2>
+                <div class="input-group">
+                    <span class="radical-symbol">√</span>
+                    <input type="number" id="root-input" placeholder="Enter number" min="0">
+                </div>
+                <button id="simplify-btn">Simplify</button>
+                <div class="result-box">
+                    <span id="root-result">Type any number</span>
+                </div>
+            </div>
+
+            <div class="solver-card">
+                <h2>Equation Solver</h2>
+                <p class="subtitle">Format: ax + b = cx + d</p>
+                <div class="input-group">
+                    <span class="radical-symbol">x</span>
+                    <input type="text" id="equation-input" placeholder="3x+5=6x-3">
+                </div>
+                <button id="solve-btn">Solve for x</button>
+            </div>
+
+            <!-- Number Tools Card -->
+            <div class="tools-card number-tools">
+                <h2>Number Tools</h2>
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="pgcd">PGCD</button>
+                    <button class="tab-btn" data-tab="fraction">Fraction</button>
+                    <button class="tab-btn" data-tab="scinot">Sci Not</button>
+                </div>
+
+                <!-- PGCD Tab -->
+                <div class="tab-content active" id="pgcd">
+                    <div class="input-row">
+                        <input type="number" id="pgcd-a" placeholder="Number A">
+                        <input type="number" id="pgcd-b" placeholder="Number B">
+                    </div>
+                    <button id="pgcd-btn" class="tool-action-btn">Find PGCD</button>
+                    <div class="result-box tool-result">
+                        <span id="pgcd-result">Result</span>
+                    </div>
+                    <div id="pgcd-steps" class="steps-container hidden"></div>
+                </div>
+
+                <!-- Fraction Tab -->
+                <div class="tab-content" id="fraction">
+                    <div class="fraction-input-wrapper">
+                        <input type="number" id="frac-num" placeholder="Num">
+                        <div class="fraction-line"></div>
+                        <input type="number" id="frac-den" placeholder="Denom">
+                    </div>
+                    <button id="frac-btn" class="tool-action-btn">Simplify</button>
+                    <div class="result-box tool-result">
+                        <span id="frac-result">Result</span>
+                    </div>
+                </div>
+
+                <!-- Sci Not Tab -->
+                <div class="tab-content" id="scinot">
+                    <input type="number" id="scinot-input" placeholder="Enter number (e.g. 0.005)" class="single-input">
+                    <button id="scinot-btn" class="tool-action-btn">Convert</button>
+                    <div class="result-box tool-result">
+                        <span id="scinot-result">Result</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Geometry Tools Card -->
+            <div class="tools-card geometry-tools">
+                <h2>Geometry Tools</h2>
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="pythagoras">Pythagoras</button>
+                    <button class="tab-btn" data-tab="thales">Thales</button>
+                </div>
+
+                <!-- Pythagoras Tab -->
+                <div class="tab-content active" id="pythagoras">
+                    <select id="pyth-mode" class="tool-select">
+                        <option value="hypotenuse">Find Hypotenuse</option>
+                        <option value="side">Find Side</option>
+                    </select>
+                    <div class="input-row">
+                        <input type="number" id="pyth-a" placeholder="Side A">
+                        <input type="number" id="pyth-b" placeholder="Side B">
+                    </div>
+                    <button id="pyth-btn" class="tool-action-btn">Calculate</button>
+                    <div class="result-box tool-result">
+                        <span id="pyth-result">Result</span>
+                    </div>
+                </div>
+
+                <!-- Thales Tab -->
+                <div class="tab-content" id="thales">
+                    <p class="subtitle">A/B = C/D (Solve for D)</p>
+                    <div class="thales-grid">
+                        <input type="number" id="thales-a" placeholder="A">
+                        <div class="equals-sign">=</div>
+                        <input type="number" id="thales-c" placeholder="C">
+
+                        <div class="thales-divider"></div>
+                        <div class="thales-divider"></div>
+                        <div class="thales-divider"></div>
+
+                        <input type="number" id="thales-b" placeholder="B">
+                        <div class="equals-sign">=</div>
+                        <div class="thales-target">x</div>
+                    </div>
+                    <button id="thales-btn" class="tool-action-btn">Find x</button>
+                    <div class="result-box tool-result">
+                        <span id="thales-result">Result</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="solver-steps-card hidden" id="solver-results-container">
+            <h2>Solution</h2>
+            <div class="result-box">
+                <span id="solver-result"></span>
+            </div>
+            <div id="solver-steps" class="steps-container"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
